@@ -1,15 +1,14 @@
+# prediction/services/model_service.py
+
 import os, joblib
 from django.conf import settings
 import numpy as np
 
-# Đường dẫn đến model & scaler
-MODEL_DIR   = os.path.join(settings.BASE_DIR, 'models')
-MODEL_PATH  = os.path.join(MODEL_DIR, 'svm_model.pkl')
-SCALER_PATH = os.path.join(MODEL_DIR, 'scaler.pkl')
+# 1. Đường dẫn đến pipeline.pkl
+PIPELINE_PATH = os.path.join(settings.BASE_DIR, 'models', 'svm_pipeline.pkl')
 
-# Load 1 lần ở module import
-_model  = joblib.load(MODEL_PATH)
-_scaler = joblib.load(SCALER_PATH)
+# 2. Load pipeline 1 lần khi import module
+_pipeline = joblib.load(PIPELINE_PATH)
 
 def predict_heart_disease(data: dict) -> int:
     """
@@ -18,11 +17,14 @@ def predict_heart_disease(data: dict) -> int:
       'restecg','thalach','exang','oldpeak','slope','ca','thal'
     Trả về 0 hoặc 1.
     """
-    # Lấy thứ tự features đúng
     feature_order = [
         'age','sex','cp','trestbps','chol','fbs',
         'restecg','thalach','exang','oldpeak','slope','ca','thal'
     ]
+    # 3. Chuyển dict → array đúng thứ tự
     x = np.array([data[f] for f in feature_order], dtype=float).reshape(1, -1)
-    x_scaled = _scaler.transform(x)
-    return int(_model.predict(x_scaled)[0])
+
+    # 4. Pipeline sẽ tự scale và predict
+    pred = _pipeline.predict(x)
+
+    return int(pred[0])

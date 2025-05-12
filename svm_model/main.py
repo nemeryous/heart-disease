@@ -1,6 +1,12 @@
 from eda import plot_correlation, plot_distributions
 from model_training import train_svm
 from evaluation import evaluate_and_plot
+from evaluation import (
+    plot_confusion_matrix,
+    plot_roc_curve,
+    plot_decision_score_histogram,
+    plot_loss_curve_from_cv
+)
 import os
 
 def main():
@@ -11,11 +17,14 @@ def main():
     plot_distributions(csv_path)
 
     # 2. Train
-    best_model, X_test, y_test, feature_names = train_svm()
+    best_pipeline, X_test, y_test, feat_names, grid = train_svm()
 
     # 3. Evaluate
-    evaluate_and_plot(best_model, X_test, y_test, feature_names)
-
+    evaluate_and_plot(best_pipeline, X_test, y_test, feat_names)
+    plot_confusion_matrix(best_pipeline, X_test, y_test)
+    plot_roc_curve(best_pipeline, X_test, y_test)
+    plot_decision_score_histogram(best_pipeline, X_test, y_test)
+    plot_loss_curve_from_cv(grid)
 
 if __name__ == '__main__':
     main()
