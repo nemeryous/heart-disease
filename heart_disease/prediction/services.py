@@ -3,8 +3,9 @@ from django.conf import settings
 import numpy as np
 
 # Đường dẫn đến model & scaler
-MODEL_PATH  = './heart_disease/models/svm_model.pkl'
-SCALER_PATH = './heart_disease/models/scaler.pkl'
+MODEL_DIR   = os.path.join(settings.BASE_DIR, 'models')
+MODEL_PATH  = os.path.join(MODEL_DIR, 'svm_model.pkl')
+SCALER_PATH = os.path.join(MODEL_DIR, 'scaler.pkl')
 
 # Load 1 lần ở module import
 _model  = joblib.load(MODEL_PATH)
