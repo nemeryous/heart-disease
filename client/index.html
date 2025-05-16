@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HeartCare - Dự đoán sức khỏe tim mạch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#FF6F61" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                    <h1>HeartCare</h1>
+                </div>
+                <div class="menu-toggle" id="menuToggle">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </div>
+                <nav>
+                    <ul id="navMenu">
+                        <li><a href="#prediction">Dự đoán</a></li>
+                        <li><a href="#education">Tìm hiểu</a></li>
+                        <li><a href="#contact">Liên hệ</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Chăm Sóc Trái Tim Của Bạn</h1>
+                <p class="hero-subtitle">Dự đoán sức khỏe tim mạch của bạn trong vài phút với công cụ thông minh của
+                    chúng tôi</p>
+                <a href="#prediction" class="btn">Bắt Đầu Ngay</a>
+
+                <div class="heart-animation">
+                    <svg viewBox="0 0 24 24" width="100%" height="100%" fill="#FF6F61">
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section prediction" id="prediction">
+        <div class="container">
+            <h2 class="section-title">Dự Đoán Nguy Cơ Tim Mạch</h2>
+
+            <div class="form-container">
+                <h3 class="form-title">Hãy Cho Chúng Tôi Biết Về Bạn</h3>
+
+                <form id="heartForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="age">Tuổi</label>
+                            <input type="number" class="form-control" id="age" min="18" max="120" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="sex">Giới tính</label>
+                            <select class="form-control" id="sex" required>
+                                <option value="" disabled selected>Chọn giới tính</option>
+                                <option value="1">Nam</option>
+                                <option value="0">Nữ</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="cp">Loại đau ngực</label>
+                            <select class="form-control" id="cp" required>
+                                <option value="" disabled selected>Chọn loại đau ngực</option>
+                                <option value="1">Đau thắt ngực điển hình</option>
+                                <option value="2">Đau thắt ngực không điển hình</option>
+                                <option value="3">Đau ngực không phải thắt ngực</option>
+                                <option value="4">Không có triệu chứng</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="trestbps">Huyết áp tâm thu (mmHg)</label>
+                            <input type="number" class="form-control" id="trestbps" min="90" max="200" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="chol">Cholesterol (mg/dL)</label>
+                            <input type="number" class="form-control" id="chol" min="100" max="600" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="fbs">Đường huyết lúc đói > 120 mg/dL</label>
+                            <select class="form-control" id="fbs" required>
+                                <option value="" disabled selected>Chọn trạng thái</option>
+                                <option value="1">Có</option>
+                                <option value="0">Không</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="restecg">Kết quả điện tâm đồ lúc nghỉ</label>
+                            <select class="form-control" id="restecg" required>
+                                <option value="" disabled selected>Chọn kết quả</option>
+                                <option value="0">Bình thường</option>
+                                <option value="1">Bất thường sóng ST-T</option>
+                                <option value="2">Phì đại thất trái</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="thalach">Nhịp tim tối đa (bpm)</label>
+                            <input type="number" class="form-control" id="thalach" min="60" max="220" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="exang">Đau thắt ngực khi gắng sức</label>
+                            <select class="form-control" id="exang" required>
+                                <option value="" disabled selected>Chọn trạng thái</option>
+                                <option value="1">Có</option>
+                                <option value="0">Không</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="oldpeak">Độ chênh đoạn ST (mm)</label>
+                            <input type="number" class="form-control" id="oldpeak" min="0" max="10" step="0.1" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="slope">Độ dốc đoạn ST</label>
+                            <select class="form-control" id="slope" required>
+                                <option value="" disabled selected>Chọn độ dốc</option>
+                                <option value="1">Dốc lên</option>
+                                <option value="2">Dốc phẳng</option>
+                                <option value="3">Dốc xuống</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="ca">Số lượng mạch máu chính bị tắc</label>
+                            <select class="form-control" id="ca" required>
+                                <option value="" disabled selected>Chọn số lượng</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="thal">Kết quả kiểm tra thalassemia</label>
+                            <select class="form-control" id="thal" required>
+                                <option value="" disabled selected>Chọn kết quả</option>
+                                <option value="1">Bình thường</option>
+                                <option value="2">Khiếm khuyết cố định</option>
+                                <option value="3">Khiếm khuyết có thể đảo ngược</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Xem Kết Quả</button>
+                </form>
+
+                <div class="results" id="results">
+                    <div class="progress-container">
+                        <svg 东部战区发布“联合利剑—2024B”演习视频 class="progress-circle" viewBox="0 0 200 200">
+                            <circle class="progress-circle-bg" cx="100" cy="100" r="90"></circle>
+                            <circle class="progress-circle-value" cx="100" cy="100" r="90" id="progressCircle"></circle>
+                        </svg>
+                        <div class="progress-text" id="riskPercentage">30%</div>
+                    </div>
+
+                    <div class="risk-level" id="riskLevel">Mức: <span class="medium">Trung Bình</span></div>
+
+                    <div class="risk-factors">
+                        <h3>Yếu tố nguy cơ</h3>
+                        <div id="riskFactorsList">
+                            <span class="risk-factor">Cholesterol cao</span>
+                            <span class="risk-factor">Hút thuốc</span>
+                        </div>
+                    </div>
+
+                    <div class="suggestions">
+                        <h3>Gợi ý</h3>
+                        <div id="suggestionsList">
+                            <div class="suggestion-item">
+                                <div class="suggestion-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 12h18M3 6h18M3 18h18"></path>
+                                    </svg>
+                                </div>
+                                <div>Tư vấn với bác sĩ để đánh giá tình trạng sức khỏe tim mạch của bạn</div>
+                            </div>
+                            <div class="suggestion-item">
+                                <div class="suggestion-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                    </svg>
+                                </div>
+                                <div>Giảm lượng cholesterol thông qua chế độ ăn cân bằng và tập thể dục đều đặn</div>
+                            </div>
+                            <div class="suggestion-item">
+                                <div class="suggestion-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                                    </svg>
+                                </div>
+                                <div>Kiểm tra sức khỏe định kỳ để theo dõi các chỉ số tim mạch</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn-reset" id="resetBtn">Làm Lại</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section education" id="education">
+        <div class="container">
+            <h2 class="section-title">Hiểu Biết và Phòng Ngừa Bệnh Tim</h2>
+
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-img" style="background-color: #e8f4fc;">
+                        <svg viewBox="0 0 200 200" width="100%" height="100%">
+                            <path fill="#4A90E2"
+                                d="M100,15 C89,15 82,25 75,37 C68,49 50,60 40,60 C30,60 15,50 15,40 C15,90 15,130 100,185 C185,130 185,90 185,40 C185,50 170,60 160,60 C150,60 132,49 125,37 C118,25 111,15 100,15 Z">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Bệnh Tim Là Gì?</h3>
+                        <p class="card-text">Bệnh tim là tình trạng ảnh hưởng đến cấu trúc hoặc chức năng của tim. Tìm
+                            hiểu về các dạng bệnh tim phổ biến và nguyên nhân gây ra chúng.</p>
+                        <a href="#" class="card-link">Đọc thêm</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img" style="background-color: #fff5f5;">
+                        <svg viewBox="0 0 200 200" width="100%" height="100%">
+                            <circle cx="100" cy="100" r="80" fill="#FF6F61" opacity="0.8"></circle>
+                            <text x="100" y="115" text-anchor="middle" font-family="Arial" font-size="60"
+                                fill="white">!</text>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Yếu Tố Nguy Cơ</h3>
+                        <p class="card-text">Một số yếu tố có thể làm tăng nguy cơ mắc bệnh tim bao gồm: tuổi tác, lối
+                            sống, tiền sử gia đình và các bệnh lý nền.</p>
+                        <a href="#" class="card-link">Đọc thêm</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img" style="background-color: #f3faef;">
+                        <svg viewBox="0 0 200 200" width="100%" height="100%">
+                            <circle cx="100" cy="100" r="80" fill="#2ECC71" opacity="0.8"></circle>
+                            <path d="M80,130 L60,110 L70,100 L80,110 L130,60 L140,70 L80,130" fill="white"></path>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Mẹo Phòng Ngừa</h3>
+                        <p class="card-text">Phòng ngừa bệnh tim bằng cách duy trì lối sống lành mạnh: ăn uống cân bằng,
+                            vận động thường xuyên và kiểm tra sức khỏe định kỳ.</p>
+                        <a href="#" class="card-link">Đọc thêm</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img" style="background-color: #f7f9fc;">
+                        <svg viewBox="0 0 200 200" width="100%" height="100%">
+                            <circle cx="100" cy="100" r="80" fill="#4A90E2" opacity="0.8"></circle>
+                            <text x="100" y="115" text-anchor="middle" font-family="Arial" font-size="60"
+                                fill="white">?</text>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Câu Hỏi Thường Gặp</h3>
+                        <p class="card-text">Tìm câu trả lời cho những thắc mắc thường gặp về bệnh tim, cách chẩn đoán
+                            và những phương pháp điều trị hiện đại.</p>
+                        <a href="#" class="card-link">Đọc thêm</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta">
+                <a href="#prediction" class="btn">Kiểm Tra Ngay</a>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3 class="footer-title">Về HeartCare</h3>
+                <p>HeartCare cung cấp công cụ dự đoán nguy cơ bệnh tim dựa trên các yếu tố lối sống và chỉ số sức khỏe.
+                    Chúng tôi cam kết nâng cao nhận thức về sức khỏe tim mạch.</p>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Liên kết</h3>
+                <div class="footer-links">
+                    <a href="#">Trang chủ</a>
+                    <a href="#prediction">Dự đoán</a>
+                    <a href="#education">Tìm hiểu</a>
+                    <a href="#contact">Liên hệ</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Liên hệ</h3>
+                <div class="footer-links">
+                    <a href="mailto:info@heartcare.com">info@heartcare.com</a>
+                    <a href="tel:+84123456789">+84 123 456 789</a>
+                    <p>123 Đường Sức Khỏe, TP. Hồ Chí Minh</p>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3 class="footer-title">Kết nối</h3>
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                            </path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 HeartCare. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+    <script src="./main.js"></script>
+</body>
+
+</html>

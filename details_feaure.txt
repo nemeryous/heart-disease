@@ -1,0 +1,22 @@
+age: độ tuổi của bệnh nhân tại thời điểm thu thập dữ liệu.
+sex: Giới tính của bệnh nhân (1 = male; 0 = female)
+cp: Loại đau ngực
+trestbps: Huyết áp tâm thu (mm Hg) của bệnh nhân khi nghỉ, đo khi nhập viện.
+chol: Mức cholesterol trong máu của bệnh nhân, đo bằng mg/dL.
+fbs: Đường huyết lúc đói của bệnh nhân có vượt quá 120 mg/dL hay không (1 = true; 0 = false)
+restecg: Kết quả điện tâm (ECG) lúc nghỉ (0: Bình thường (normal) | 1: Có bất thường sóng ST-T (ST-T wave abnormality). | 2: Phì đại thất trái (left ventricular hypertrophy).)
+thalach: Nhịp tim tối đa (beats per minute - bpm) của bệnh nhân
+exang: Bệnh nhân có bị đau thắt ngực khi gắng sức hay không (1 = yes; 0 = no)
+oldpeak: Độ chênh xuống của đoạn ST trên điện tâm (mm), đo trong bài kiểm tra gắng sức so với lúc nghỉ.
+slope: Độ dốc của đoạn ST trong bài kiểm tra gắng sức, thường có 3 giá trị:
+  1: dốc lên (upsloping)
+  2: dốc phẳng (flat)
+  3: dốc xuống (downsloping)
+ca: Số lượng mạch máu chính (0-3) bị tắc, được phát hiện qua chụp huỳnh quang (fluoroscopy).
+thal: Kết quả kiểm tra thalassemia, với 3 giá trị:
+  1: Bình thường (normal).
+  2: Khiếm khuyết cố định (fixed defect).
+  3: Khiếm khuyết có thể đảo ngược (reversible defect).
+target:Biến mục tiêu (target) của bài toán, cho biết bệnh nhân có bệnh tim hay không:
+  1: Có bệnh tim (heart disease present).
+  0: Không có bệnh tim (no heart disease).
