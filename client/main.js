@@ -164,112 +164,125 @@ function generateSuggestions(riskFactors) {
 }
 
 // Form submission handler
-heartForm.addEventListener('submit', function (e) {
+heartForm.addEventListener('submit', async function (e) {
     e.preventDefault();
 
     // Collect form data
     const formData = {
         age: parseInt(document.getElementById('age').value),
-        gender: document.getElementById('gender').value,
-        cholesterol: parseInt(document.getElementById('cholesterol').value),
-        systolic: parseInt(document.getElementById('systolic').value),
-        diastolic: parseInt(document.getElementById('diastolic').value),
-        smoking: document.getElementById('smoking').checked,
-        activity: document.getElementById('activity').value,
-        familyHistory: document.getElementById('familyHistory').checked
+        sex: parseInt(document.getElementById('sex').value),
+        cp: parseInt(document.getElementById('cp').value),
+        trestbps: parseInt(document.getElementById('trestbps').value),
+        chol: parseInt(document.getElementById('chol').value),
+        fbs: parseInt(document.getElementById('fbs').value),
+        restecg: parseInt(document.getElementById('restecg').value),
+        thalach: parseInt(document.getElementById('thalach').value),
+        exang: parseInt(document.getElementById('exang').value),
+        oldpeak: parseFloat(document.getElementById('oldpeak').value),
+        slope: parseInt(document.getElementById('slope').value),
+        ca: parseInt(document.getElementById('ca').value),
+        thal: parseInt(document.getElementById('thal').value)
     };
 
-    // Calculate risk
-    const riskResult = calculateRisk(formData);
+    try {
+        // Show loading state
+        resultsSection.style.display = 'block';
+        resultsSection.innerHTML = '<div class="loading">Đang phân tích...</div>';
+        console.log('Form Data:', formData);
 
-    // Generate risk level text
-    let riskLevelText = '';
-    let riskClass = '';
-
-    if (riskResult.percentage < 20) {
-        riskLevelText = "Thấp";
-        riskClass = "low";
-    } else if (riskResult.percentage < 50) {
-        riskLevelText = "Trung Bình";
-        riskClass = "medium";
-    } else {
-        riskLevelText = "Cao";
-        riskClass = "high";
-    }
-
-    // Update progress circle
-    const circumference = 2 * Math.PI * 90;
-    const offset = circumference - (riskResult.percentage / 100) * circumference;
-    progressCircle.style.strokeDashoffset = offset;
-
-    // Set color based on risk level
-    if (riskClass === "low") {
-        progressCircle.style.stroke = getComputedStyle(document.documentElement).getPropertyValue('--green') || "#2ECC71";
-    } else if (riskClass === "medium") {
-        progressCircle.style.stroke = getComputedStyle(document.documentElement).getPropertyValue('--yellow') || "#F1C40F";
-    } else {
-        progressCircle.style.stroke = getComputedStyle(document.documentElement).getPropertyValue('--red') || "#E74C3C";
-    }
-
-    // Update risk percentage text
-    riskPercentage.textContent = riskResult.percentage + "%";
-
-    // Update risk level text
-    riskLevel.innerHTML = `Mức: <span class="${riskClass}">${riskLevelText}</span>`;
-
-    // Update risk factors list
-    riskFactorsList.innerHTML = '';
-    if (riskResult.factors.length > 0) {
-        riskResult.factors.forEach(factor => {
-            const riskFactorElement = document.createElement('span');
-            riskFactorElement.className = 'risk-factor';
-            riskFactorElement.textContent = factor;
-            riskFactorsList.appendChild(riskFactorElement);
+        // Send data to API
+        const response = await fetch('http://localhost:8000/api/predict/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
         });
-    } else {
-        const riskFactorElement = document.createElement('span');
-        riskFactorElement.className = 'risk-factor';
-        riskFactorElement.textContent = 'Không có yếu tố nguy cơ đáng kể';
-        riskFactorsList.appendChild(riskFactorElement);
-    }
 
-    // Generate and update suggestions
-    const suggestions = generateSuggestions(riskResult.factors);
-    suggestionsList.innerHTML = '';
-    suggestions.forEach(suggestion => {
-        const suggestionElement = document.createElement('div');
-        suggestionElement.className = 'suggestion-item';
-        suggestionElement.innerHTML = `
-                    <div class="suggestion-icon">
-                        ${suggestion.icon}
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.detail || 'Có lỗi xảy ra khi dự đoán');
+        }
+
+        // Create results HTML
+        const resultsHTML = `
+            <div class="risk-level" id="riskLevel">
+                <span class="${result.prediction === 1 ? 'high' : 'low'}">${result.prediction === 1 ? 'Có dấu hiệu bệnh tim mạch' : 'Không có dấu hiệu bệnh tim mạch'}</span>
+            </div>
+
+            <div class="suggestions">
+                <h3>Gợi ý</h3>
+                <div id="suggestionsList">
+                    <div class="suggestion-item">
+                        <div class="suggestion-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 12h18M3 6h18M3 18h18"></path>
+                            </svg>
+                        </div>
+                        <div>Tư vấn với bác sĩ để đánh giá tình trạng sức khỏe tim mạch của bạn</div>
                     </div>
-                    <div>${suggestion.text}</div>
-                `;
-        suggestionsList.appendChild(suggestionElement);
-    });
+                    ${result.prediction === 1 ? `
+                        <div class="suggestion-item">
+                            <div class="suggestion-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                                </svg>
+                            </div>
+                            <div>Thực hiện chế độ ăn lành mạnh và tập thể dục đều đặn</div>
+                        </div>
+                    ` : ''}
+                    <div class="suggestion-item">
+                        <div class="suggestion-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                        </div>
+                        <div>Kiểm tra sức khỏe định kỳ để theo dõi các chỉ số tim mạch</div>
+                    </div>
+                </div>
+            </div>
 
-    // Show results section with animation
-    resultsSection.style.display = 'block';
-    setTimeout(() => {
-        resultsSection.classList.add('active');
-        // Scroll to results
-        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }, 100);
-});
+            <button class="btn-reset" id="resetBtn">Làm Lại</button>
+        `;
 
-// Reset button handler
-resetBtn.addEventListener('click', function () {
-    // Reset form
-    heartForm.reset();
+        // Update results section
+        resultsSection.innerHTML = resultsHTML;
 
-    // Hide results
-    resultsSection.classList.remove('active');
-    setTimeout(() => {
-        resultsSection.style.display = 'none';
-    }, 300);
+        // Update progress circle
+        const circumference = 2 * Math.PI * 90;
+        const riskPercentage = result.prediction === 1 ? 75 : 25;
+        const offset = circumference - (riskPercentage / 100) * circumference;
+        progressCircle.style.strokeDasharray = circumference;
+        progressCircle.style.strokeDashoffset = offset;
+        progressCircle.style.stroke = result.prediction === 1 ? 
+            getComputedStyle(document.documentElement).getPropertyValue('--red') || "#E74C3C" :
+            getComputedStyle(document.documentElement).getPropertyValue('--green') || "#2ECC71";
 
-    // Scroll to form top
-    document.querySelector('.form-title').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        // Add animation class
+        setTimeout(() => {
+            resultsSection.classList.add('active');
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+
+        // Add reset button handler
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            heartForm.reset();
+            resultsSection.classList.remove('active');
+            setTimeout(() => {
+                resultsSection.style.display = 'none';
+            }, 300);
+            document.querySelector('.form-title').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+    } catch (error) {
+        console.error('Error:', error);
+        resultsSection.innerHTML = `<div class="error">${error.message}</div>`;
+    }
 });
 
 // Initialize progress circle

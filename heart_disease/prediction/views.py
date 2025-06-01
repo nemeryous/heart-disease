@@ -2,7 +2,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import HeartDiseaseInputSerializer
-from .services import predict_heart_disease
+import joblib
+import pandas as pd
+import os
+from django.conf import settings
+
 # Create your views here.
 class PredictAPIView(APIView):
     """
@@ -19,5 +23,15 @@ class PredictAPIView(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        pred = predict_heart_disease(serializer.validated_data)
+        model = joblib.load(os.path.join(settings.BASE_DIR, 'models', 'best_heart_disease_model.joblib'))
+        scaler = joblib.load(os.path.join(settings.BASE_DIR, 'models', 'feature_scaler.joblib'))
+
+        # Chuyển đổi dữ liệu đầu vào thành DataFrame
+        input_data = pd.DataFrame([serializer.validated_data])
+        # Chuẩn hóa dữ liệu
+        input_data_scaled = scaler.transform(input_data)
+        # Dự đoán
+        pred = model.predict(input_data_scaled)[0]
+        # Trả về kết quả dự đoán
+
         return Response({'prediction': pred})
