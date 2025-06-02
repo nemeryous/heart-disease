@@ -3,6 +3,11 @@
 Ứng dụng web dự đoán bệnh tim mạch sử dụng Django và Machine Learning.
 
 ## Cấu trúc dự án
+```
+bash git clone https://github.com/nemeryous/heart-disease.git
+```
+![alt text](images/1.png)
+
 
 ```
 heart-disease/
@@ -30,30 +35,28 @@ heart-disease/
 ```bash
 # Tạo môi trường ảo
 python -m venv venv
-
+![alt text](images/2.png)
 # Kích hoạt môi trường ảo
 # Windows
 venv\Scripts\activate
+![alt text](images/3.png)
 # Linux/Mac
 source venv/bin/activate
 
 # Cài đặt các thư viện cần thiết sử dụng requirements.txt
 pip install -r requirements.txt
 ```
-
+![alt text](images/4.png)
 ### 2. Cài đặt và chạy Django backend
 
 ```bash
 # Di chuyển vào thư mục Django project
 cd heart_disease
 
-# Chạy migrations
-python manage.py migrate
-
 # Khởi động server
 python manage.py runserver
 ```
-
+![alt text](images/5.png)
 Server Django sẽ chạy tại `http://localhost:8000`
 
 ### 3. Chạy frontend
@@ -61,7 +64,7 @@ Server Django sẽ chạy tại `http://localhost:8000`
 ```bash
 # Di chuyển vào thư mục client
 cd client
-
+![alt text](images/6.png)
 # Mở file index.html bằng trình duyệt
 ```
 
