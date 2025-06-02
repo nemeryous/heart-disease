@@ -7,17 +7,7 @@ import pandas as pd
 import os
 from django.conf import settings
 
-# Create your views here.
 class PredictAPIView(APIView):
-    """
-    POST /api/predict/
-    {
-      "age":63, "sex":1, "cp":3, "trestbps":145, "chol":233,
-      "fbs":1, "restecg":0, "thalach":150, "exang":0,
-      "oldpeak":2.3, "slope":0, "ca":0, "thal":1
-    }
-    => { "prediction": 1 }
-    """
     def post(self, request):
         serializer = HeartDiseaseInputSerializer(data=request.data)
         if not serializer.is_valid():
@@ -26,12 +16,20 @@ class PredictAPIView(APIView):
         model = joblib.load(os.path.join(settings.BASE_DIR, 'models', 'best_heart_disease_model.joblib'))
         scaler = joblib.load(os.path.join(settings.BASE_DIR, 'models', 'feature_scaler.joblib'))
 
-        # Chuyển đổi dữ liệu đầu vào thành DataFrame
         input_data = pd.DataFrame([serializer.validated_data])
-        # Chuẩn hóa dữ liệu
         input_data_scaled = scaler.transform(input_data)
-        # Dự đoán
         pred = model.predict(input_data_scaled)[0]
-        # Trả về kết quả dự đoán
-
-        return Response({'prediction': pred})
+        
+        prob = model.predict_proba(input_data_scaled)[0]
+        
+        probability_heart_disease = prob[1]
+        
+        if pred == 1:
+            confidence = round(probability_heart_disease * 100, 2)
+        else:
+            confidence = round(prob[0] * 100, 2)
+            
+        return Response({
+            'prediction': int(pred),
+            'confidence': f"{confidence}%"
+        })
