@@ -1,7 +1,7 @@
 {
   "model_name": "Random Forest",
   "accuracy": 1.0,
-  "training_date": "2025-05-31 13:30:58",
+  "training_date": "2025-06-02 11:32:26",
   "feature_names": [
     "age",
     "sex",
@@ -39,8 +39,8 @@
     "warm_start": false
   },
   "data_shape": {
-    "training_samples": 820,
+    "training_samples": 774,
     "features": 13,
-    "test_samples": 205
+    "test_samples": 194
   }
 }
